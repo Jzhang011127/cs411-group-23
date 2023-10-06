@@ -1,0 +1,9 @@
+Recipe Recommender:
+Overview: Users input ingredients they have at home, and the app responds with a recipe database to suggest dishes they can cook. It can also correlate with nutritional data to provide health stats for each dish.
+APIs: Recipe Database API, Nutritional Data API.
+Third-Party Authentication: Users can log in with Google or Facebook to save their fridges or recipes to an account.
+
+Health and Weather Analyzer:
+Overview: This application correlates real-time weather data with health statistics to provide users with personalized health recommendations. For instance, it can warn asthma patients of potential risks on high pollen days or suggest activities for individuals based on the weather conditions.
+Data Sources: Weather data API (e.g., OpenWeatherMap), Public health statistics API.
+Third-Party Authentication: Users can log in using their Google or Facebook accounts to receive personalized alerts and recommendations.
