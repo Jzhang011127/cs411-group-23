@@ -1,12 +1,12 @@
 Health and Weather Analyzer:
 Overview: This application correlates real-time weather data with health statistics to provide users with personalized health recommendations. For instance, it can warn asthma patients of potential risks on high pollen days or suggest activities for individuals based on the weather conditions.
 Data Sources: Weather data API, Public health statistics API.
-
     From weather data API OpenWeatherMap(https://openweathermap.org/current) we obtain the current weather status of the provided area, note that the required field longitude and latitude are not obtained yet.
-      Thus, we can resolve this issue with navigator.geolocation.getCurrentlocation() method in the front end, assuming the user permits us to retrieve its current location(reference:https://www.geeksforgeeks.org/which-method-can-be-used-to-get-the-users-current-location-in-html/).
-      Geocoding api helps us to convert the latitude and longtitude into the name and zip code of a city(https://openweathermap.org/api/geocoding-api), so we can make suggestions based on this to the user.
-    //(might be changed)Each user's have to insert his/her diseases to the database, so we can parse their conditions and make suggestions based on this basis.
-    //(might be changed)If the users persists to move to a location that is not safe for him/her, we will warn the user what consequences would he/she faces due to that disease from clinical table search services api(https://clinicaltables.nlm.nih.gov/apidoc/conditions/v3/doc.html#params), and return the specified url to that user about the disease.
-    
-
+      Thus, we can resolve this issue with the navigator.geolocation.getCurrentlocation() method in the front end, assuming the user permits us to retrieve its current location(reference:https://www.geeksforgeeks.org/which-method-can-be-used-to-get-the-users-current-location-in-html/).
+      Geocoding API helps us to convert the latitude and longitude into the name and zip code of a city(https://openweathermap.org/api/geocoding-api), so we can make suggestions based on this to the user(for where to go).
+    We will create different suggestions that the user can take, i.e. staying at home, going out to a further place, that is not damageable for one's health condition, assigning a random probability on it(or, we can long list everything to the user)
+    //(might be changed)Each user must insert his/her diseases into the database, so we can parse their conditions and make suggestions based on this basis.
+    Documents of health issues and weather are predefined in our database, so once the server starts we assume that everything is there. New documentation will be analyzed for further updates, and we perform manual updates for the database.
+    //(might be changed)If the user persists in moving to a location that is not safe for him/her, we will warn the user about what consequences he/she faces due to that disease from clinical table search services api(https://clinicaltables.nlm.nih.gov/apidoc/conditions/v3/doc.html#params), and return the specified url to that user about the disease.
+    (just in case you guys find it useful, I've attached the link to Apple health kit development tools here:https://developer.apple.com/documentation/healthkit/about_the_healthkit_framework)
 Third-Party Authentication: Users can log in using their Google or Facebook accounts to receive personalized alerts and recommendations.
