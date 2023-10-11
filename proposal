@@ -8,5 +8,5 @@ Data Sources: Weather data API, Public health statistics API.
     //(might be changed)Each user must insert his/her diseases into the database, so we can parse their conditions and make suggestions based on this basis.
     Documents of health issues and weather are predefined in our database, so once the server starts we assume that everything is there. New documentation will be analyzed for further updates, and we perform manual updates for the database.
     //(might be changed)If the user persists in moving to a location that is not safe for him/her, we will warn the user about what consequences he/she faces due to that disease from clinical table search services api(https://clinicaltables.nlm.nih.gov/apidoc/conditions/v3/doc.html#params), and return the specified url to that user about the disease.
-    (just in case you guys find it useful, I've attached the link to Apple health kit development tools here:https://developer.apple.com/documentation/healthkit/about_the_healthkit_framework)
+    (just in case you guys find it useful, I've attached the link to Apple health kit development tools here:https://developer.apple.com/documentation/healthkit/about_the_healthkit_framework, though I found it useless)
 Third-Party Authentication: Users can log in using their Google or Facebook accounts to receive personalized alerts and recommendations.
