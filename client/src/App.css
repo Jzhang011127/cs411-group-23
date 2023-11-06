@@ -1,42 +1,46 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.header {
+  display: flex;
+  background-color: #333;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.header a {
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  padding: 0;
+  margin: 0;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login {
+  margin-right: 0px; /* Adjust the margin as needed to move the login link to the right */
+}
+.col1 {
+  float: left;
+  width: 80%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.col2 {
+  float: left;
+  width: 20%
 }
 
-.card {
-  padding: 2em;
+.holder:after {
+  content: "";
+  display: table;
+  clear: both;
 }
-
-.read-the-docs {
-  color: #888;
+.recs {
+  float:left;
+  width: 80%;
+}
+.weekly-forecast {
+  float: left;
+  width: 20%;
 }
