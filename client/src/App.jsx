@@ -30,22 +30,28 @@ function Header() {
     </div>
     <div class="holder">
     <div class="col1">
+    <div class="forecast-container">
     <div class="forecast">
-      <p>
-        forecast
-      </p>
+      <p>forecast</p>
+    </div>
     </div>
     <div class="recs-and-weekly">
+      <div class="rec-container">
       <div class="recs">
         <p>recs</p>
       </div>
+      </div>
+      <div class="weekly-container">
       <div class="weekly-forecast">
         <p>week</p>
       </div>
+      </div>
     </div>
     </div>
-    <div class="col2">
+    <div class="alert-container">
+    <div class="alerts">
       <p>alerts</p>
+    </div>
     </div>
     </div>
     </>
