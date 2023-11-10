@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import WeatherWidget from './components/WeatherWidget'
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
     <body>
     <main>  
     <div>
-        <Header />
+        <Base />
       </div>
       <script src="index.js"></script>
     </main>
@@ -18,7 +19,7 @@ function App() {
     </>
   )
 }
-function Header() {
+function Base() {
   return (
     <><div className="header">
       <div className="logo">
@@ -32,7 +33,7 @@ function Header() {
     <div class="col1">
     <div class="forecast-container">
     <div class="forecast">
-      <p>forecast</p>
+      <WeatherWidget />
     </div>
     </div>
     <div class="recs-and-weekly">
