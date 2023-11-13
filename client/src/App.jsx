@@ -23,34 +23,34 @@ function Base() {
   return (
     <><div className="header">
       <div className="logo">
-        <img src="your-logo.png" alt="Logo" width="50" height="50" />
+        {/* <img src="your-logo.png" alt="Logo" width="50" height="50" /> */}
       </div>
       <div className="login">
         <a href="#">Login</a>
       </div>
     </div>
-    <div class="holder">
-    <div class="col1">
-    <div class="forecast-container">
-    <div class="forecast">
+    <div className="holder">
+    <div className="col1">
+    <div className="forecast-container">
+    <div className="forecast">
       <WeatherWidget />
     </div>
     </div>
-    <div class="recs-and-weekly">
-      <div class="rec-container">
-      <div class="recs">
+    <div className="recs-and-weekly">
+      <div className="rec-container">
+      <div className="recs">
         <p>recs</p>
       </div>
       </div>
-      <div class="weekly-container">
-      <div class="weekly-forecast">
+      <div className="weekly-container">
+      <div className="weekly-forecast">
         <p>week</p>
       </div>
       </div>
     </div>
     </div>
-    <div class="alert-container">
-    <div class="alerts">
+    <div className="alert-container">
+    <div className="alerts">
       <p>alerts</p>
     </div>
     </div>

@@ -20,10 +20,13 @@ const WeatherWidget = () => {
             const response = await axios.get(mapboxGeocodingUrl);
             if (response.data.features.length > 0) {
               const placeName = response.data.features[0].place_name;
-              const city = placeName.split(", ")[2];
-              const state = placeName.split(", ")[3];
+              const city = placeName.split(", ")[1];
+              const state = placeName.split(", ")[2];
+              if (city.includes("ave") || city.includes("Ave") || city.includes("st") || city.includes("St") || city.includes("rd") || city.includes("Rd") || city.includes("Ctr")) {
+                const city = placeName.split(", ")[2];
+                const state = placeName.split(", ")[3];
+              };
               setLocation(`${city}, ${state}`);
-              //setLocation(placeName);
             } else {
               console.error("City not found in the Mapbox response.");
             }
@@ -50,9 +53,7 @@ const WeatherWidget = () => {
     } else {
       console.error("Geolocation is not supported in this browser.");
     }
-    console.log("Weather Data:", weather.weather[0].description);
   }, []);
-  const source = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
   
   return (
     <div className="weather-widget">
@@ -69,21 +70,36 @@ const WeatherWidget = () => {
               {weather.weather[0].description.charAt(0).toUpperCase() + weather.weather[0].description.slice(1)}
               <br></br>
               <br></br>
-              
-              <p><img src={source}></img></p>
           </div>
         </div>
-        <div>
+        <div className="temp-and-icon">
         <div className="temperature">
-          <p></p>    
-          <br></br>  
-          <br></br>    
-          <p>{Math.round(32 + 1.8 * (weather.main.temp))}°F</p>
+          {Math.round(32 + 1.8 * (weather.main.temp))}°F
         </div>
-        <div className="weathericon">
-          
+        <div className="weather-icon">
+        <img
+                src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
+                alt="Weather Icon"
+                width="90px"
+              />
         </div>
         </div>
+        <div className="weather-info">
+            <div className="column">
+              <p>Sunrise: {new Date(weather.sys.sunrise * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
+            </div>
+            <div className="column">
+              <p>Sunset: {new Date(weather.sys.sunset * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
+            </div>
+            {weather.uvi && (
+              <div className="column">
+                <p>UV Index: {weather.uvi}</p>
+              </div>
+            )}
+            {/* <div className="column">
+              <p>UV Index: {weather.uvi}</p>
+            </div> */}
+          </div>
         </>
       )}
     </div>
