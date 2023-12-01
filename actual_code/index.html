@@ -25,22 +25,30 @@
     <script type="text/babel">
         function App() {
             const [weatherData, setWeatherData] = React.useState(null);
+            const [cityName, setCityName] = React.useState('');
+            const handleSignUpClick = () => {
+                window.location.href = '/actual_code/signup.html';
+            };
 
-            // Fetch weather data when component mounts
-            React.useEffect(() => {
-                fetchWeatherData().then(data => setWeatherData(data));
-            }, []);
+            // Function to handle city name input change
+            const handleCityNameChange = (event) => {
+                setCityName(event.target.value);
+            };
+
+            // Function to handle the search button click
+            const handleSearch = () => {
+                fetchWeatherData(cityName);
+            };
 
             // Define the function to fetch weather data
-            async function fetchWeatherData() {
+            async function fetchWeatherData(city) {
                 try {
-                    const cityName = 'doha'; // Replace with a real city name
                     const apiKey = '48e3aaf913c90b624d8126f2fe8f994f'; // Replace with your actual API key
-                    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`);
-                    return response.data;
+                    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`);
+                    return setWeatherData(response.data);
                 } catch (error) {
                     console.error('Error fetching weather data:', error);
-                    return null;
+                    setWeatherData(null);
                 }
             }
 
@@ -62,10 +70,14 @@
                         </div>
                         <div className="flex space-x-4">
                             <button className="bg-white text-blue-500 font-semibold py-2 px-4 rounded shadow-lg">Login</button>
-                            <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded shadow-lg" onClick={() => console.log('Sign up clicked')}>Sign Up</button>
+                            <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded shadow-lg" onClick={handleSignUpClick}>Sign Up</button>
                         </div>
                     </header>
                     <main>
+                        <div className="mb-4">
+                            <input type="text" value={cityName} onChange={handleCityNameChange} placeholder="Enter City Name" className="border p-2 mr-2" />
+                            <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded">Search</button>
+                        </div>
                         <div className="grid grid-cols-3 gap-4">
                             {/* Render weather data */}
                             {weatherData && (
