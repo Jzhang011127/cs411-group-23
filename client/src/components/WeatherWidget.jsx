@@ -13,7 +13,8 @@ const WeatherWidget = () => {
           const { latitude, longitude } = position.coords;
 
           // Fetch the city and state using Mapbox's Geocoding API
-          const mapboxAccessToken = "pk.eyJ1IjoiZ3Nld2VsbDcxMSIsImEiOiJjbG9ydHFxMHYwcnBrMmpsbmJ4czI5bXhxIn0.BBOD7cs2UXRLgyyerJKNFw"; // Replace with your Mapbox access token
+          const mapboxAccessToken =
+            "pk.eyJ1IjoiZ3Nld2VsbDcxMSIsImEiOiJjbG9ydHFxMHYwcnBrMmpsbmJ4czI5bXhxIn0.BBOD7cs2UXRLgyyerJKNFw"; // Replace with your Mapbox access token
           const mapboxGeocodingUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxAccessToken}`;
 
           try {
@@ -22,10 +23,18 @@ const WeatherWidget = () => {
               const placeName = response.data.features[0].place_name;
               const city = placeName.split(", ")[1];
               const state = placeName.split(", ")[2];
-              if (city.includes("ave") || city.includes("Ave") || city.includes("st") || city.includes("St") || city.includes("rd") || city.includes("Rd") || city.includes("Ctr")) {
+              if (
+                city.includes("ave") ||
+                city.includes("Ave") ||
+                city.includes("st") ||
+                city.includes("St") ||
+                city.includes("rd") ||
+                city.includes("Rd") ||
+                city.includes("Ctr")
+              ) {
                 const city = placeName.split(", ")[2];
                 const state = placeName.split(", ")[3];
-              };
+              }
               setLocation(`${city}, ${state}`);
             } else {
               console.error("City not found in the Mapbox response.");
@@ -54,42 +63,55 @@ const WeatherWidget = () => {
       console.error("Geolocation is not supported in this browser.");
     }
   }, []);
-  
+
   return (
     <div className="weather-widget">
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-        <div className="Test">
-          <div className="location">
+          <div className="Test">
+            <div className="location">
               <img className="images" src="../64113.png" width="15px"></img>
               {location}
-          </div>
-          <div className="desc">
-              {weather.weather[0].description.charAt(0).toUpperCase() + weather.weather[0].description.slice(1)}
+            </div>
+            <div className="desc">
+              {weather.weather[0].description.charAt(0).toUpperCase() +
+                weather.weather[0].description.slice(1)}
               <br></br>
               <br></br>
+            </div>
           </div>
-        </div>
-        <div className="temp-and-icon">
-        <div className="temperature">
-          {Math.round(32 + 1.8 * (weather.main.temp))}°F
-        </div>
-        <div className="weather-icon">
-        <img
+          <div className="temp-and-icon">
+            <div className="temperature">
+              {Math.round(32 + 1.8 * weather.main.temp)}°F
+            </div>
+            <div className="weather-icon">
+              <img
                 src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
                 alt="Weather Icon"
                 width="90px"
               />
-        </div>
-        </div>
-        <div className="weather-info">
+            </div>
+          </div>
+          <div className="weather-info">
             <div className="column">
-              <p>Sunrise: {new Date(weather.sys.sunrise * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
+              <p>
+                Sunrise:{" "}
+                {new Date(weather.sys.sunrise * 1000).toLocaleTimeString([], {
+                  hour: "numeric",
+                  minute: "numeric",
+                })}
+              </p>
             </div>
             <div className="column">
-              <p>Sunset: {new Date(weather.sys.sunset * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
+              <p>
+                Sunset:{" "}
+                {new Date(weather.sys.sunset * 1000).toLocaleTimeString([], {
+                  hour: "numeric",
+                  minute: "numeric",
+                })}
+              </p>
             </div>
             {weather.uvi && (
               <div className="column">
