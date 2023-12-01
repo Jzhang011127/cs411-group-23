@@ -19,3 +19,8 @@ function fetchWeatherData(cityName) {
 function fetchHealthData() {
     // Add similar functionality for health data
 }
+
+document.getElementById('googleLogin').addEventListener('click', googleLogin);
+document.getElementById('facebookLogin').addEventListener('click', facebookLogin);
+
+// Include the Firebase script and firebaseConfig.js in your HTML
