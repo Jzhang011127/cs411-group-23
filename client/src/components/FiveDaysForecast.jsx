@@ -1,73 +1,72 @@
+import { Timeline } from "antd";
 import React, { useEffect, useState } from "react";
 import request from '../utils/request';
+import "./FiveDaysForecast.css";
+
+const getFiveDayWeather = (wether) => {
+  if (!wether.list) {
+    return [];
+  }
+  const list = wether.list;
+  const fiveDaysWeather = [];
+
+  for (let i = 0; i < 40; i += 8) {
+    const date = list[i]?.dt_txt.split(" ")[0];
+    const style = { marginBottom: 0 };
+    fiveDaysWeather.push({
+      children: (
+        <div className="weaklyForecast">
+          <p style={style}>date : {date}</p>
+          <p style={style}>max temp : {list[i]?.main?.temp_max}</p>
+          <p style={style}>min temp : {list[i]?.main?.temp_min}</p>
+          <p style={style}>average temp : {list[i]?.main?.temp}</p>
+        </div>
+      ),
+    });
+  }
+  return fiveDaysWeather;
+};
 
 const FiveDaysForecast = (props) => {
-  const [fiveDays, setFiveDays] = useState({});
-  useEffect( async () => {
-    async function fetchData(){
-    if(props.location.latitude && props.location.longitude){
-      const fiveDaysKey = "263c364c0c876d4542c6dc220af45a4a";
-      const fiveDaysUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${props.geolocation.location.latitude}&lon=${props.geolocation.location.longitude}&appid=${fiveDaysKey}`;
-      const requestMethod = 'get';
-      const requestParams = {
-        appid : fiveDaysKeys,
+  const [fiveDays, setFiveDays] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            const fiveDaysKey = "263c364c0c876d4542c6dc220af45a4a";
+            const fiveDaysUrl = `https://api.openweathermap.org/data/2.5/forecast`;
+            const requestMethod = "get";
+            const requestParams = {
+              appid: fiveDaysKey,
+              lat: latitude,
+              lon: longitude,
+              units: "imperial",
+            };
+            const response = await request({
+              url: fiveDaysUrl,
+              method: requestMethod,
+              params: requestParams,
+            });
+            console.info(response);
+            setFiveDays(getFiveDayWeather(response.data));
+          },
+          (error) => {
+            console.error("Geolocation error", error);
+          }
+        );
       }
-      const response = await request(fiveDaysUrl, requestMethod, requestParams);
-      setFiveDays(response.data);
     }
-  }
-  fetchData();
+    fetchData();
   }, []);
-      
-      return (
-        <div className="">
-          {props.loading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-            <div className="Test">
-              <div className="location">
-                  <img className="images" src="../64113.png" width="15px"></img>
-                  {location}
-              </div>
-              <div className="desc">
-                  {weather.weather[0].description.charAt(0).toUpperCase() + weather.weather[0].description.slice(1)}
-                  <br></br>
-                  <br></br>
-              </div>
-            </div>
-            <div className="temp-and-icon">
-            <div className="temperature">
-              {Math.round(32 + 1.8 * (weather.main.temp))}°F
-            </div>
-            <div className="weather-icon">
-            <img
-                    src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
-                    alt="Weather Icon"
-                    width="90px"
-                  />
-            </div>
-            </div>
-            <div className="weather-info">
-                <div className="column">
-                  <p>Sunrise: {new Date(weather.sys.sunrise * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
-                </div>
-                <div className="column">
-                  <p>Sunset: {new Date(weather.sys.sunset * 1000).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
-                </div>
-                {weather.uvi && (
-                  <div className="column">
-                    <p>UV Index: {weather.uvi}</p>
-                  </div>
-                )}
-                {/* <div className="column">
-                  <p>UV Index: {weather.uvi}</p>
-                </div> */}
-              </div>
-            </>
-          )}
-        </div>
-      );
-    };
+
+  return (
+    <>
+      <p>five days forecast</p>
+      <Timeline items={fiveDays} />
+    </>
+  );
+};
     
 export default FiveDaysForecast;

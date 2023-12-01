@@ -9,7 +9,7 @@ const request = async ({url, method, params}) => {
             ...(method.toLowerCase() === 'get' ? { params } : { data: params })
         };
         const response = await axios(config);
-        return response.data;
+        return response;
     } catch (error) {
         console.error('Request failed:', error);
         throw error;

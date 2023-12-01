@@ -20,46 +20,65 @@ function App() {
 }
 
 function Base() {
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState({});
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    async function fetchData(){
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
+    async function fetchData() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
 
-          // Fetch the city and state using Mapbox's Geocoding API
-          const mapboxAccessToken = "pk.eyJ1IjoiZ3Nld2VsbDcxMSIsImEiOiJjbG9ydHFxMHYwcnBrMmpsbmJ4czI5bXhxIn0.BBOD7cs2UXRLgyyerJKNFw"; // Replace with your Mapbox access token
-          const requetParams = {
-            access_token : mapboxAccessToken,
-          };
-          const mapboxGeocodingUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`;
-          const requestMethod = 'get';
-          const response = await request(mapboxGeocodingUrl, requestMethod, requestParams);
-          if (response.data.features.length > 0) {
-            const placeName = response.data.features[0].place_name;
-            const city = placeName.split(", ")[1];
-            const state = placeName.split(", ")[2];
-            if (city.includes("ave") || city.includes("Ave") || city.includes("st") || city.includes("St") || city.includes("rd") || city.includes("Rd") || city.includes("Ctr")) {
-              const city = placeName.split(", ")[2];
-              const state = placeName.split(", ")[3];
+            // Fetch the city and state using Mapbox's Geocoding API
+            const mapboxAccessToken =
+              "pk.eyJ1IjoiZ3Nld2VsbDcxMSIsImEiOiJjbG9ydHFxMHYwcnBrMmpsbmJ4czI5bXhxIn0.BBOD7cs2UXRLgyyerJKNFw"; // Replace with your Mapbox access token
+            const requestParams = {
+              access_token: mapboxAccessToken,
             };
-            setLocation(`${city}, ${state}`);
-            setLoading(false);
-          } else {
-            console.error("City not found in the Mapbox response.");
+            const mapboxGeocodingUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`;
+            const requestMethod = "get";
+            const response = await request({
+              url: mapboxGeocodingUrl,
+              method: requestMethod,
+              params: requestParams,
+            });
+
+            // console.info(response);
+            if (response?.data?.features.length > 0) {
+              const placeName = response.data.features[0].place_name;
+              const city = placeName.split(", ")[1];
+              const state = placeName.split(", ")[2];
+              if (
+                city.includes("ave") ||
+                city.includes("Ave") ||
+                city.includes("st") ||
+                city.includes("St") ||
+                city.includes("rd") ||
+                city.includes("Rd") ||
+                city.includes("Ctr")
+              ) {
+                const city = placeName.split(", ")[2];
+                const state = placeName.split(", ")[3];
+              }
+              setLocation({
+                latitude,
+                longitude,
+                location: `${city}, ${state}`,
+              });
+              setLoading(false);
+            } else {
+              console.error("City not found in the Mapbox response.");
+            }
+          },
+          (error) => {
+            console.error("Geolocation error", error);
           }
-        },
-        (error) => {
-          console.error("Geolocation error", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported in this browser.");
+        );
+      } else {
+        console.error("Geolocation is not supported in this browser.");
+      }
     }
-  }
-  fetchData();
+    fetchData();
   }, []);
   return (
     <>
@@ -75,7 +94,7 @@ function Base() {
         <div className="col1">
           <div className="forecast-container">
             <div className="forecast">
-              <WeatherWidget geolocation={location} loading={loading} />
+              <WeatherWidget />
             </div>
           </div>
           <div className="recs-and-weekly">
@@ -91,11 +110,11 @@ function Base() {
             </div>
           </div>
         </div>
-      <div className="alert-container">
-        <div className="alerts">
-          <p>alerts</p>
+        <div className="alert-container">
+          <div className="alerts">
+            <p>alerts</p>
+          </div>
         </div>
-      </div>
       </div>
     </>
   );
