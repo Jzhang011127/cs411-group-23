@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -26,21 +27,28 @@
         function App() {
             const [weatherData, setWeatherData] = React.useState(null);
             const [cityName, setCityName] = React.useState('');
+            const [currentDateTime, setCurrentDateTime] = React.useState(new Date());
+
+            // Update the current date and time every second
+            React.useEffect(() => {
+                const timer = setInterval(() => {
+                    setCurrentDateTime(new Date());
+                }, 1000);
+                return () => clearInterval(timer);
+            }, []);
+
             const handleSignUpClick = () => {
                 window.location.href = '/actual_code/signup.html';
             };
 
-            // Function to handle city name input change
             const handleCityNameChange = (event) => {
                 setCityName(event.target.value);
             };
 
-            // Function to handle the search button click
             const handleSearch = () => {
                 fetchWeatherData(cityName);
             };
 
-            // Define the function to fetch weather data
             async function fetchWeatherData(city) {
                 try {
                     const apiKey = '48e3aaf913c90b624d8126f2fe8f994f'; // Replace with your actual API key
@@ -52,9 +60,12 @@
                 }
             }
 
-            // Function to convert Kelvin to Celsius
             const kelvinToCelsius = (kelvin) => {
-                return (kelvin - 273.15).toFixed(2); // Keeping two decimal places
+                return (kelvin - 273.15).toFixed(2);
+            };
+
+            const formatDateTime = (date) => {
+                return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
             };
 
             return (
@@ -73,10 +84,12 @@
                             <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded shadow-lg" onClick={handleSignUpClick}>Sign Up</button>
                         </div>
                     </header>
-                    <main className="grid grid-cols-1 md:grids-cols-3 gap-4 p-4">
-                        <div className="mb-4">
-                            <input type="text" value={cityName} onChange={handleCityNameChange} placeholder="Enter City Name" className="border p-2 mr-2" />
-                            <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded">Search</button>
+                    <main className="grid grid-cols-3 gap-4">
+                        <div>
+                            <div className="mb-4">
+                                <input type="text" value={cityName} onChange={handleCityNameChange} placeholder="Enter City Name" className="border p-2 mr-2" />
+                                <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded">Search</button>
+                            </div>
                         </div>
                         <section className="bg-white p-6 rounded-lg shadow-lg">
                             <h2 className="text-gray-700 font-bold mb-4">Health Recommendations</h2>
@@ -85,15 +98,14 @@
                             </p>
                             <button className="bg-blue-500 text-white px-4 py-2 rounded-full" onClick={handleSignUpClick}>Login</button>
                         </section>
-                        {/* Render weather data */}
                         {weatherData && (
                             <div className="bg-white p-6 rounded-lg shadow-lg">
                                 <h2 className="text-4xl-gray-700 text-600 font-bold mb-4">Current Weather in {weatherData.name}</h2>
+                                <div className="text-lg mb-2">{formatDateTime(currentDateTime)}</div>
                                 <div className="text-3xl text-blue-500 font-bold">{kelvinToCelsius(weatherData.main.temp)}°C</div>
-                                <div className="text-3xl text-green-500 font-bold">{weatherData.weather[0].main}</div>
-                                <div className="text-3xl text-red-500 font-bold">Humidity: {weatherData.main.humidity}%</div>
-                                <div className="text-3xl text-yellow-500 font-bold"><i className="fas fa-wind"></i> {weatherData.wind.speed} m/s</div>
-                                <i className="fas fa-tint mr-2"></i>
+                                <div className="font-bold">{weatherData.weather[0].main}</div>
+                                <div className="font-bold">Humidity: {weatherData.main.humidity}%</div>
+                                <div className="font-bold"><i className="fas fa-wind"></i> {weatherData.wind.speed} m/s</div>
                             </div>
                         )}
                         <section className="bg-white p-6 rounded-lg shadow-lg">

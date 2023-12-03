@@ -1,5 +1,6 @@
 import express from 'express';
-import mongoose from '/Users/tanaydamani/Documents/cs411-group-23/server.js';
+import mongoose from './server.js';
+
 
 const app = express();
 app.use(express.json());

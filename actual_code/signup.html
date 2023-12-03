@@ -22,8 +22,36 @@
     <div id="app"></div>
     <script type="text/babel">
         function App() {
-            const handleSignUp = () => {
-                window.location.href = '/actual_code/index-2.html';
+            // Function to handle the form submission
+            const handleSignUp = async (event) => {
+                event.preventDefault(); // Prevent default form submission behavior
+
+                // Gather data from the form
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                // Send data to the server
+                try {
+                    const response = await fetch('/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, password, email }),
+                    });
+
+                    const data = await response.json();
+                    if (data.status === 'User created') {
+                        // Redirect or show success message
+                        window.location.href = '/actual_code/index.html';
+                    } else {
+                        // Handle errors
+                        console.error('Signup failed:', data);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
             };
 
             return (
