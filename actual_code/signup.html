@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     </link>
@@ -21,6 +22,7 @@
 <body>
     <div id="app"></div>
     <script type="text/babel">
+        import { signInWithGoogle } from './OAuth.js';  s
         function App() {
             // Function to handle the form submission
             const handleSignUp = async (event) => {
@@ -53,6 +55,18 @@
                     console.error('Error:', error);
                 }
             };
+
+            const handleGoogleSignIn = () => {
+            signInWithGoogle().then(() => {
+                // Handle successful sign-in
+                // Redirect or update UI as needed
+            }).catch(error => {
+                // Handle sign-in errors
+                console.error('Google Sign-In Error:', error);
+            });
+        };
+
+        return (
 
             return (
                 <div>
@@ -98,8 +112,8 @@
                                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                                     Sign Up
                                 </button>
-                                <a href="/auth/google" className="flex items-center justify-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                    <i className="fab fa-google mr-2"></i> Login with Google
+                                <a onClick={handleGoogleSignIn} className="...">
+                                    <i className="..."></i> Login with Google
                                 </a>
                             </div>
                             <p className="text-center text-gray-500 text-xs mt-6">
