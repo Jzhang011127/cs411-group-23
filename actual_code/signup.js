@@ -5,6 +5,8 @@ import mongoose from './server.js';
 const app = express();
 app.use(express.json());
 
+app.use(express.static('actual_code/signup.html'));
+
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
