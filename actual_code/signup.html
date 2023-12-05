@@ -22,7 +22,7 @@
 <body>
     <div id="app"></div>
     <script type="text/babel">
-        import { signInWithGoogle } from './OAuth.js';  s
+       // import { signInWithGoogle } from './OAuth.js';  
         function App() {
             // Function to handle the form submission
             const handleSignUp = async (event) => {
@@ -57,18 +57,26 @@
             };
 
             const handleGoogleSignIn = () => {
-            signInWithGoogle().then(() => {
-                // Handle successful sign-in
-                // Redirect or update UI as needed
-            }).catch(error => {
-                // Handle sign-in errors
-                console.error('Google Sign-In Error:', error);
-            });
-        };
+                //signInWithGoogle().then(() => {
+                    // Handle successful sign-in
+                    // Redirect or update UI as needed
+                const provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider)
+                    .then((result) => {
+                        // This gives you a Google Access Token.
+                        const token = result.credential.accessToken;
+                        // The signed-in user info.
+                        const user = result.user;
+                        // Redirect or update UI
+                        console.log(user);
+               
+                }).catch(error => {
+                    // Handle sign-in errors
+                    console.error('Google Sign-In Error:', error);
+                });
+            };
 
         return (
-
-            return (
                 <div>
                     {/* Header with Icon */}
                     <header className="bg-white p-4 shadow-lg">
@@ -112,8 +120,8 @@
                                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                                     Sign Up
                                 </button>
-                                <a onClick={handleGoogleSignIn} className="...">
-                                    <i className="..."></i> Login with Google
+                                <a onClick={handleGoogleSignIn} className="flex items-center justify-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    <i className="fab fa-google mr-2"></i> Login with Google
                                 </a>
                             </div>
                             <p className="text-center text-gray-500 text-xs mt-6">
@@ -127,6 +135,25 @@
 
         ReactDOM.render(<App />, document.getElementById('app'));
     </script>
+         <!-- JUST ADDED THE FOLLOWING -->
+        <!-- Include Firebase library -->
+        <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    
+        <!-- Firebase configuration and initialization -->
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyCTx-vgovENB0YtmiCEXk4I5FsYLIDafj8",
+                authDomain: "web-app-9abe7.firebaseapp.com",
+                projectId: "web-app-9abe7",
+                storageBucket: "web-app-9abe7.appspot.com",
+                messagingSenderId: "414567470405",
+                appId: "1:414567470405:web:46043a1ee14c8c61c61a2c",
+                measurementId: "G-Q79XV9S54S"
+            };
+    
+            firebase.initializeApp(firebaseConfig);
+        </script>
 </body>
 
 </html>
