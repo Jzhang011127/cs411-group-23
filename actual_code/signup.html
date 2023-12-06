@@ -78,7 +78,8 @@
                     // Handle successful sign-in
                     // Redirect or update UI as needed
                 const provider = new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(provider)
+                    firebase.auth().signInWithPopup(provider)
+                    signInWithPopup(firebase.auth(), provider, browserPopupRedirectResolver)
                     .then((result) => {
                         // This gives you a Google Access Token.
                         const token = result.credential.accessToken;
@@ -152,23 +153,5 @@
         ReactDOM.render(<App />, document.getElementById('app'));
     </script>
 
-        <!-- Include Firebase library -->
-        <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-    
-        <!-- Firebase configuration and initialization -->
-        <script>
-            const firebaseConfig = {
-                apiKey: "AIzaSyCTx-vgovENB0YtmiCEXk4I5FsYLIDafj8",
-                authDomain: "web-app-9abe7.firebaseapp.com",
-                projectId: "web-app-9abe7",
-                storageBucket: "web-app-9abe7.appspot.com",
-                messagingSenderId: "414567470405",
-                appId: "1:414567470405:web:46043a1ee14c8c61c61a2c",
-                measurementId: "G-Q79XV9S54S"
-            };
-    
-            firebase.initializeApp(firebaseConfig);
-        </script>
 </body>
 </html>
