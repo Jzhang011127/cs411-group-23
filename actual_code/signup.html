@@ -18,9 +18,28 @@
         }
     </style>
 </head>
-
 <body>
     <div id="app"></div>
+
+    <!-- Firebase libraries -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+
+    <!-- Firebase configuration and initialization -->
+    <script>
+        const firebaseConfig = {
+            // Firebase configuration
+                apiKey: "AIzaSyCTx-vgovENB0YtmiCEXk4I5FsYLIDafj8",
+                authDomain: "web-app-9abe7.firebaseapp.com",
+                projectId: "web-app-9abe7",
+                storageBucket: "web-app-9abe7.appspot.com",
+                messagingSenderId: "414567470405",
+                appId: "1:414567470405:web:46043a1ee14c8c61c61a2c",
+                measurementId: "G-Q79XV9S54S"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
     <script type="text/babel">
         function App() {
             // Function to handle the form submission
@@ -45,7 +64,7 @@
                     const data = await response.json();
                     if (data.status === 'User created') {
                         // Redirect or show success message
-                        window.location.href = '/actual_code/healthdata.html';
+                        window.location.href = '/actual_code/index.html';
                     } else {
                         // Handle errors
                         console.error('Signup failed:', data);
@@ -65,16 +84,14 @@
                         const token = result.credential.accessToken;
                         // The signed-in user info.
                         const user = result.user;
-                        // Redirect or update UI
-                        console.log(user);
-               
-                }).catch(error => {
-                    // Handle sign-in errors
-                    console.error('Google Sign-In Error:', error);
-                });
+                        // Redirect to your desired URL
+                        window.location.href = 'http://127.0.0.1:5500/actual_code/index.html';
+                    }).catch(error => {
+                        console.error('Google Sign-In Error:', error);
+                    });
             };
 
-        return (
+            return (
                 <div>
                     {/* Header with Icon */}
                     <header className="bg-white p-4 shadow-lg">
@@ -113,19 +130,20 @@
                                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
                             </div>
 
+
+                        {/* Buttons Container */}
+                        <div className="flex justify-between mt-4">
                             {/* Sign Up Button */}
-                            <div className="flex items-center justify-between space-x-4">
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                                    Sign Up
-                                </button>
-                                <a onClick={handleGoogleSignIn} className="flex items-center justify-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                    <i className="fab fa-google mr-2"></i> Login with Google
-                                </a>
-                            </div>
-                            <p className="text-center text-gray-500 text-xs mt-6">
-                                &copy;2023 Health & Weather Analyzer. All rights reserved.
-                            </p>
+                            <button onClick={handleSignUp} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Sign Up
+                            </button>
+
+                            {/* Google Sign In Button */}
+                            <button onClick={handleGoogleSignIn} className="flex items-center justify-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
+                                <i className="fab fa-google mr-2"></i> Login with Google
+                            </button>
                         </div>
+                    </div>
                     </div>
                 </div>
             );
@@ -133,6 +151,7 @@
 
         ReactDOM.render(<App />, document.getElementById('app'));
     </script>
+<<<<<<< HEAD
         <!-- Include Firebase library -->
         <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
@@ -151,6 +170,7 @@
     
             firebase.initializeApp(firebaseConfig);
         </script>
+=======
+>>>>>>> 80c3a388099f4b4445ebbddf8ed8c7a9a0b182be
 </body>
-
 </html>
