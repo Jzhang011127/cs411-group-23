@@ -10,7 +10,7 @@
     "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Grace Sewell",
+  "author": "CS411 Group 23",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"

@@ -22,7 +22,6 @@
 <body>
     <div id="app"></div>
     <script type="text/babel">
-       // import { signInWithGoogle } from './OAuth.js';  
         function App() {
             // Function to handle the form submission
             const handleSignUp = async (event) => {
@@ -57,7 +56,6 @@
             };
 
             const handleGoogleSignIn = () => {
-                //signInWithGoogle().then(() => {
                     // Handle successful sign-in
                     // Redirect or update UI as needed
                 const provider = new firebase.auth.GoogleAuthProvider();
@@ -135,7 +133,6 @@
 
         ReactDOM.render(<App />, document.getElementById('app'));
     </script>
-         <!-- JUST ADDED THE FOLLOWING -->
         <!-- Include Firebase library -->
         <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
